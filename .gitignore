@@ -3,3 +3,6 @@ proxies/
 proxies_anonymous/
 proxies_geolocation/
 proxies_geolocation_anonymous/
+
+**.xml
+/.idea/
