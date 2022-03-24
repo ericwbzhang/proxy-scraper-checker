@@ -319,16 +319,16 @@ class ProxyScraperChecker:
         )
 
 
-async def main() -> None:
+async def main( timeout= None, save_path= None, proxies= None, proxies_anonymous= None, proxies_geolocation= None, proxies_geolocation_anonymous= None  ) -> None:
     await ProxyScraperChecker(
-        timeout=config.TIMEOUT,
+        timeout=config.TIMEOUT if timeout is None else timeout,
         max_connections=config.MAX_CONNECTIONS,
         sort_by_speed=config.SORT_BY_SPEED,
-        save_path=config.SAVE_PATH,
-        proxies=config.PROXIES,
-        proxies_anonymous=config.PROXIES_ANONYMOUS,
-        proxies_geolocation=config.PROXIES_GEOLOCATION,
-        proxies_geolocation_anonymous=config.PROXIES_GEOLOCATION_ANONYMOUS,
+        save_path=config.SAVE_PATH if save_path is None else save_path,
+        proxies=config.PROXIES if proxies is None else proxies,
+        proxies_anonymous=config.PROXIES_ANONYMOUS if proxies_anonymous is None else proxies_anonymous,
+        proxies_geolocation=config.PROXIES_GEOLOCATION if proxies_geolocation is None else proxies_geolocation,
+        proxies_geolocation_anonymous=config.PROXIES_GEOLOCATION_ANONYMOUS if proxies_geolocation_anonymous is None else proxies_geolocation_anonymous,
         http_sources=config.HTTP_SOURCES
         if config.HTTP and config.HTTP_SOURCES
         else None,
@@ -340,6 +340,10 @@ async def main() -> None:
         else None,
     ).main()
 
+
+def execute_proxy_check( timeout= None, save_path= None, proxies= None, proxies_anonymous= None, proxies_geolocation= None, proxies_geolocation_anonymous= None ):
+
+    asyncio.run( main( timeout= timeout, save_path= save_path, proxies= proxies, proxies_anonymous= proxies_anonymous, proxies_geolocation= proxies_geolocation, proxies_geolocation_anonymous= proxies_geolocation_anonymous) )
 
 if __name__ == "__main__":
     asyncio.run(main())
